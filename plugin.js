@@ -43,7 +43,7 @@ exports.for = function(API, plugin) {
         if (!API.FS.existsSync(PATH.dirname(toPath))) {
             API.FS.mkdirsSync(PATH.dirname(toPath));
         }
-        FS.symlinkSync(fromPath, toPath);
+        API.FS.symlinkSync(fromPath, toPath);
         return API.Q.resolve();
     }
 

@@ -40,10 +40,15 @@ exports.for = function(API, plugin) {
     }
 
     plugin.extract = function(fromPath, toPath, locator, options) {
+        var self = this;
         if (!API.FS.existsSync(PATH.dirname(toPath))) {
             API.FS.mkdirsSync(PATH.dirname(toPath));
         }
-        API.FS.symlinkSync(fromPath, toPath);
+        if (self.node.parent && fromPath.substring(0, self.node.parent.path.length) === self.node.parent.path) {
+            API.FS.symlinkSync(PATH.relative(PATH.dirname(self.node.path), fromPath), toPath);
+        } else {
+            API.FS.symlinkSync(fromPath, toPath);
+        }
         return API.Q.resolve();
     }
 

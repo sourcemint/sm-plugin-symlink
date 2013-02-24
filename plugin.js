@@ -44,12 +44,18 @@ exports.for = function(API, plugin) {
         if (!API.FS.existsSync(PATH.dirname(toPath))) {
             API.FS.mkdirsSync(PATH.dirname(toPath));
         }
+        /*
+        // TODO: If package mapping has relative path then we use relative path here.
+        // NOTE: We don't use a relative symlink by default even if link is internal to package.
+        //       This is important as the final package may be linked together from various directories
+        //       causing relative links to point to wrong location.
         if (self.node.parent && fromPath.substring(0, self.node.parent.path.length) === self.node.parent.path) {
             API.FS.symlinkSync(PATH.relative(PATH.dirname(self.node.path), fromPath), toPath);
         } else {
             API.FS.symlinkSync(fromPath, toPath);
         }
+        */
+        API.FS.symlinkSync(fromPath, toPath);
         return API.Q.resolve();
     }
-
 }

@@ -16,6 +16,7 @@ exports.for = function(API, plugin) {
             var locations = {
                 "pointer": locator.url
             };
+            locations.archive = locator.url;
             locations.symlink = locator.url;
             return (type)?locations[type]:locations;
         }
